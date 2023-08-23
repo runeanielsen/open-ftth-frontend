@@ -27,6 +27,7 @@ import DisconnectFiberEditor from "./DisconnectFiberEditor";
 import EditTerminalEquipment from "./EditTerminalEquipment";
 import EditRack from "./EditRack";
 import AddAdditionalStructures from "./AddAdditionalStructures";
+import TagTerminalEquipmentLines from "./TagTerminalEquipmentLines";
 
 type RackContainerProps = {
   children?: ReactNode;
@@ -423,7 +424,7 @@ function TerminalEquipment() {
             dispatch({ type: "resetShowTagTerminalEquipmentLines" })
           }
         >
-          <p>Hello World!</p>
+          <TagTerminalEquipmentLines />
         </ModalContainer>,
       );
     } else {
