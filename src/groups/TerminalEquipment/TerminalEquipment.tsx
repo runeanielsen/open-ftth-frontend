@@ -3,6 +3,7 @@ import {
   faFilter,
   faPlus,
   faTrashAlt,
+  faTag,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactNode, useContext, useEffect, useMemo } from "react";
@@ -197,6 +198,18 @@ function TerminalEquipmentTable({
                     <div className="header-icons">
                       <span
                         role="button"
+                        className="header-icons__icon"
+                        onClick={() => {
+                          dispatch({
+                            type: "setShowTagTerminalEquipmentLines",
+                            params: { show: true },
+                          });
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTag} />
+                      </span>
+                      <span
+                        role="button"
                         className="header-icons__icon color-red"
                         onClick={() =>
                           dispatch({
@@ -300,7 +313,7 @@ function TerminalEquipment() {
               }
               side={state.showFiberEditor.side}
             />
-          </ModalContainer>
+          </ModalContainer>,
         );
       } else {
         throw Error("Did not have all information to show fiber editor.");
@@ -337,7 +350,7 @@ function TerminalEquipment() {
               })
             }
           />
-        </ModalContainer>
+        </ModalContainer>,
       );
     } else if (
       state.showEditTerminalEquipment.show &&
@@ -359,7 +372,7 @@ function TerminalEquipment() {
             }
             routeNodeId={state.routeNodeId}
           />
-        </ModalContainer>
+        </ModalContainer>,
       );
     } else if (
       state.showEditRack.show &&
@@ -375,7 +388,7 @@ function TerminalEquipment() {
             rackId={state.showEditRack.rackId}
             routeNodeId={state.showEditRack.routeNodeId}
           />
-        </ModalContainer>
+        </ModalContainer>,
       );
     } else if (
       state.showAddAdditionalStructure.show &&
@@ -400,7 +413,18 @@ function TerminalEquipment() {
               state.showAddAdditionalStructure.terminalEquipmentId
             }
           />
-        </ModalContainer>
+        </ModalContainer>,
+      );
+    } else if (state.showTagTerminalEquipmentLines.show) {
+      showElement(
+        <ModalContainer
+          title={t("TAG_TERMINAL_EQUIPMENT_LINES")}
+          closeCallback={() =>
+            dispatch({ type: "resetShowTagTerminalEquipmentLines" })
+          }
+        >
+          <p>Hello World!</p>
+        </ModalContainer>,
       );
     } else {
       showElement(null);
@@ -413,6 +437,7 @@ function TerminalEquipment() {
     state.terminalEquipmentOrRackId,
     state.showEditRack,
     state.showAddAdditionalStructure,
+    state.showTagTerminalEquipmentLines,
     showElement,
     dispatch,
     t,
@@ -437,7 +462,7 @@ function TerminalEquipment() {
           return (
             <RackContainer
               parentNodeStructure={state.connectivityView?.parentNodeStructures.find(
-                (z) => z.id === x
+                (z) => z.id === x,
               )}
               key={x}
             >

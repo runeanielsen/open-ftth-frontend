@@ -59,6 +59,10 @@ interface RemoveStructure {
   terminalStructureId: string;
 }
 
+interface ShowTagTerminalEquipmentLines {
+  show: boolean;
+}
+
 interface TerminalEquipmentState {
   connectivityView: TerminalEquipmentConnectivityView | null;
   showFreeLines: { [id: string]: boolean };
@@ -67,6 +71,7 @@ interface TerminalEquipmentState {
   showEditTerminalEquipment: ShowEditTerminalEquipment;
   showEditRack: ShowEditRack;
   showAddAdditionalStructure: ShowAddAdditionalStructures;
+  showTagTerminalEquipmentLines: ShowTagTerminalEquipmentLines;
   connectivityTraceViews: {
     [id: string]: { show: boolean; view: ConnectivityTraceView };
   };
@@ -130,6 +135,13 @@ type TerminalEquipmentAction =
     }
   | {
       type: "resetRemoveStructure";
+    }
+  | {
+      type: "setShowTagTerminalEquipmentLines";
+      params: ShowTagTerminalEquipmentLines;
+    }
+  | {
+      type: "resetShowTagTerminalEquipmentLines";
     };
 
 const defaultShowFiberEditorValues: ShowFiberEditor = {
@@ -164,6 +176,10 @@ const defaultShowAddtionalStructure: ShowAddAdditionalStructures = {
   terminalEquipmentId: null,
 };
 
+const defaultShowTagTerminalEquipmentLines: ShowTagTerminalEquipmentLines = {
+  show: false,
+};
+
 const terminalEquipmentInitialState: TerminalEquipmentState = {
   connectivityView: null,
   showFreeLines: {},
@@ -171,6 +187,7 @@ const terminalEquipmentInitialState: TerminalEquipmentState = {
   showEditTerminalEquipment: defaultShowEditTerminalEquipment,
   showEditRack: defaultShowEditRack,
   showAddAdditionalStructure: defaultShowAddtionalStructure,
+  showTagTerminalEquipmentLines: defaultShowTagTerminalEquipmentLines,
   connectivityTraceViews: {},
   selectedConnectivityTraceHops: null,
   selectedEnvelope: null,
@@ -183,7 +200,7 @@ const terminalEquipmentInitialState: TerminalEquipmentState = {
 
 function terminalEquipmentReducer(
   state: TerminalEquipmentState,
-  action: TerminalEquipmentAction
+  action: TerminalEquipmentAction,
 ): TerminalEquipmentState {
   switch (action.type) {
     case "setRouteNodeId":
@@ -285,6 +302,16 @@ function terminalEquipmentReducer(
         ...state,
         removeStructure: null,
       };
+    case "setShowTagTerminalEquipmentLines":
+      return {
+        ...state,
+        showTagTerminalEquipmentLines: action.params,
+      };
+    case "resetShowTagTerminalEquipmentLines":
+      return {
+        ...state,
+        showTagTerminalEquipmentLines: defaultShowTagTerminalEquipmentLines,
+      };
     default:
       throw new Error(`No action for ${action}`);
   }
@@ -321,7 +348,7 @@ const TerminalEquipmentProvider = ({
   const client = useClient();
   const [state, dispatch] = useReducer(
     terminalEquipmentReducer,
-    terminalEquipmentInitialState
+    terminalEquipmentInitialState,
   );
 
   const [connectiviyViewUpdatedResult] =
@@ -381,7 +408,7 @@ const TerminalEquipmentProvider = ({
 
   useEffect(() => {
     const notLoaded = Object.entries(state.connectivityTraceViews).filter(
-      (x) => x[1].show && !x[1].view
+      (x) => x[1].show && !x[1].view,
     );
 
     notLoaded.forEach((x) => {
@@ -401,10 +428,10 @@ const TerminalEquipmentProvider = ({
     if (!state.selectedConnectivityTraceHops) return;
 
     const routeSegmentIds = state.selectedConnectivityTraceHops.flatMap(
-      (x) => x.routeSegmentIds
+      (x) => x.routeSegmentIds,
     );
     const routeSegmentGeometries = state.selectedConnectivityTraceHops.flatMap(
-      (x) => x.routeSegmentGeometries
+      (x) => x.routeSegmentGeometries,
     );
 
     setTrace({
@@ -440,7 +467,7 @@ const TerminalEquipmentProvider = ({
     if (!state.removeStructure) return;
 
     const confirmed = window.confirm(
-      t("Are you sure you want to delete the selected object?")
+      t("Are you sure you want to delete the selected object?"),
     );
     if (!confirmed) {
       dispatch({ type: "resetRemoveStructure" });
