@@ -4,6 +4,7 @@ import {
   faPlus,
   faTrashAlt,
   faTriangleExclamation,
+  faTags,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactNode, useContext, useEffect, useMemo } from "react";
@@ -29,6 +30,7 @@ import EditRack from "./EditRack";
 import AddAdditionalStructures from "./AddAdditionalStructures";
 import OutageView from "../RouteNetworkDiagram/OutageView";
 import EditInterface from "./EditInterface";
+import TagView from "./TagView";
 
 type RackContainerProps = {
   children?: ReactNode;
@@ -254,6 +256,18 @@ function TerminalEquipmentTable({
                           <FontAwesomeIcon icon={faEdit} />
                         </span>
                       )}
+                      <span
+                        role="button"
+                        className="header-icons__icon"
+                        onClick={() =>
+                          dispatch({
+                            type: "setShowEditTags",
+                            showEditTags: { show: true },
+                          })
+                        }
+                      >
+                        <FontAwesomeIcon icon={faTags} />
+                      </span>
                       <span
                         role="button"
                         className="header-icons__icon color-red"
@@ -493,9 +507,22 @@ function TerminalEquipment() {
         >
           <EditInterface
             routeNodeId={state.showEditInterfaceView.routeNodeId}
-            terminalEquipmentId={state.showEditInterfaceView.terminalEquipmentId}
-            terminalStructureId={state.showEditInterfaceView.terminalStructureId}
+            terminalEquipmentId={
+              state.showEditInterfaceView.terminalEquipmentId
+            }
+            terminalStructureId={
+              state.showEditInterfaceView.terminalStructureId
+            }
           />
+        </ModalContainer>,
+      );
+    } else if (state.showEditTags?.show) {
+      showElement(
+        <ModalContainer
+          title={t("EDIT_TAGS")}
+          closeCallback={() => dispatch({ type: "resetShowEditInterfaceView" })}
+        >
+          <TagView />
         </ModalContainer>,
       );
     } else {
@@ -511,6 +538,7 @@ function TerminalEquipment() {
     state.showAddAdditionalStructure,
     state.showOutageView,
     state.showEditInterfaceView,
+    state.showEditTags,
     showElement,
     dispatch,
     t,
