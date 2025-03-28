@@ -520,7 +520,7 @@ function TerminalEquipment() {
       showElement(
         <ModalContainer
           title={t("EDIT_TAGS")}
-          closeCallback={() => dispatch({ type: "resetShowEditInterfaceView" })}
+          closeCallback={() => dispatch({ type: "resetShowEditTags" })}
         >
           <EditTags />
         </ModalContainer>,
