@@ -164,6 +164,9 @@ type TerminalEquipmentAction =
   | {
       type: "setShowEditTags";
       showEditTags: ShowEditTags;
+    }
+  | {
+      type: "resetShowEditTags";
     };
 
 const defaultShowFiberEditorValues: ShowFiberEditor = {
@@ -348,6 +351,11 @@ function terminalEquipmentReducer(
       return {
         ...state,
         showEditTags: action.showEditTags,
+      };
+    case "resetShowEditTags":
+      return {
+        ...state,
+        showEditTags: null,
       };
     default:
       throw new Error(`No action for ${action}`);
