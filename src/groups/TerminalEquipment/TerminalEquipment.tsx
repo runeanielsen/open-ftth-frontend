@@ -30,7 +30,7 @@ import EditRack from "./EditRack";
 import AddAdditionalStructures from "./AddAdditionalStructures";
 import OutageView from "../RouteNetworkDiagram/OutageView";
 import EditInterface from "./EditInterface";
-import TagView from "./TagView";
+import EditTags from "./EditTags";
 
 type RackContainerProps = {
   children?: ReactNode;
@@ -522,7 +522,7 @@ function TerminalEquipment() {
           title={t("EDIT_TAGS")}
           closeCallback={() => dispatch({ type: "resetShowEditInterfaceView" })}
         >
-          <TagView />
+          <EditTags />
         </ModalContainer>,
       );
     } else {
