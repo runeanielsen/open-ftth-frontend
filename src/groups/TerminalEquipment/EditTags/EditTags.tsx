@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import MultiLineTextBox from "../../../components/MultiLineTextbox";
 import DefaultButton from "../../../components/DefaultButton";
+import TagMenu from "../../../components/TagMenu";
 
 interface TagInfo {
   id: string;
@@ -126,7 +127,7 @@ function EditTags() {
                   />
                 </div>
                 <div className="disconnect-fiber-editor-container-body-line-item">
-                  {x.tags.join(" | ")}
+                  <TagMenu tags={x.tags} />
                 </div>
               </div>
             ))}

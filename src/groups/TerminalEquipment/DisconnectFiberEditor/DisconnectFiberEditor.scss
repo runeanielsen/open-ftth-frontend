@@ -24,7 +24,9 @@
 
 .disconnect-fiber-editor-container-header {
   width: 100%;
-  padding-right: 15px;
+  // This has been added to align elements accross different browsers.
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
 }
 
 .disconnect-fiber-editor-container-header-item {

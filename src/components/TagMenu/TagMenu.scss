@@ -1,0 +1,46 @@
+@use "../../global-styles/colors";
+
+.tag-menu {
+  display: flex;
+  padding: 5px;
+  border-radius: 4px;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.tag-menu-line {
+  border: 1px solid colors.$border-color;
+  padding: 5px 10px;
+  border-radius: 4px;
+  // This is done to keep everything aligned.
+  min-height: 28px;
+  align-content: center;
+}
+
+.tag-menu-line-remove {
+  color: black;
+  font-weight: bold;
+  background-color: white;
+
+  &:hover {
+    background-color: colors.$hover-color;
+    cursor: pointer;
+    background-color: white;
+    color: red;
+  }
+}
+
+.tag-menu-new-tag {
+  padding: 5px 10px;
+  border-radius: 10%;
+  border: 1px dashed black;
+
+  &:hover {
+    cursor: pointer;
+    border-style: solid;
+  }
+}
+
+.tag-menu-new-tag-add {
+  font-size: 16px;
+}

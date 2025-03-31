@@ -18,23 +18,9 @@
 
 .edit-tags-container-header {
   width: 100%;
-  padding-right: 15px;
-}
-
-.edit-tags-container-header-item {
-  font-weight: bold;
-  border-right: 1px solid colors.$border-color;
-  padding: 10px;
-  overflow-wrap: break-word;
-
-  &:last-of-type {
-    border-right: none;
-  }
-}
-
-.edit-tags-container-header {
-  width: 100%;
-  padding-right: 15px;
+  // This has been added to align elements accross different browsers.
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
 }
 
 .edit-tags-container-header-item {
