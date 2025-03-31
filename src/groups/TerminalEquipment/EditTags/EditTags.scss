@@ -1,2 +1,87 @@
+@use "../../../global-styles/colors";
+
 .edit-tags {
+}
+
+.edit-tags-container {
+  border: 1px solid colors.$border-color;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.edit-tags-container-header,
+.edit-tags-container-body-line {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 3fr));
+  grid-auto-flow: column;
+}
+
+.edit-tags-container-header {
+  width: 100%;
+  padding-right: 15px;
+}
+
+.edit-tags-container-header-item {
+  font-weight: bold;
+  border-right: 1px solid colors.$border-color;
+  padding: 10px;
+  overflow-wrap: break-word;
+
+  &:last-of-type {
+    border-right: none;
+  }
+}
+
+.edit-tags-container-header {
+  width: 100%;
+  padding-right: 15px;
+}
+
+.edit-tags-container-header-item {
+  font-weight: bold;
+  border-right: 1px solid colors.$border-color;
+  padding: 10px;
+  overflow-wrap: break-word;
+
+  &:last-of-type {
+    border-right: none;
+  }
+}
+
+.edit-tags-container-body {
+  font-size: 14px;
+  max-height: 60vh;
+  overflow-y: scroll;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.edit-tags-container-body-line {
+  flex-basis: 100%;
+  width: 100%;
+  border-bottom: 1px solid colors.$border-color;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.edit-tags-container-body-line-item {
+  border-right: 1px solid colors.$border-color;
+  padding: 10px;
+  width: 100%;
+  overflow-wrap: break-word;
+
+  &:first-of-type {
+    align-items: center;
+    justify-items: center;
+    height: 100%;
+    display: flex;
+  }
+
+  &:last-of-type {
+    padding-right: 20px;
+    border-right: none;
+  }
 }

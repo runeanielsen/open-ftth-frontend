@@ -519,6 +519,7 @@ function TerminalEquipment() {
     } else if (state.showEditTags?.show) {
       showElement(
         <ModalContainer
+          maxWidth="1200px"
           title={t("EDIT_TAGS")}
           closeCallback={() => dispatch({ type: "resetShowEditTags" })}
         >
