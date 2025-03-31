@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import MultiLineTextBox from "../../../components/MultiLineTextbox";
 import DefaultButton from "../../../components/DefaultButton";
@@ -72,6 +72,28 @@ function EditTags() {
     setTags(x);
   }, []);
 
+  const updateTagComment = useCallback(
+    (id: string, comment: string) => {
+      setTags((prevTags) => {
+        if (prevTags === null) {
+          return prevTags;
+        }
+
+        const updatedTags = { ...prevTags };
+        const tagToUpdate = updatedTags[id];
+        if (tagToUpdate) {
+          updatedTags[id] = {
+            ...tagToUpdate,
+            comment,
+          };
+        }
+
+        return updatedTags;
+      });
+    },
+    [setTags],
+  );
+
   if (tags === null) {
     return <></>;
   }
@@ -98,7 +120,9 @@ function EditTags() {
                   <MultiLineTextBox
                     rows={5}
                     value={x.comment ?? ""}
-                    setValue={() => {}}
+                    setValue={(updatedComment) =>
+                      updateTagComment(x.id, updatedComment)
+                    }
                   />
                 </div>
                 <div className="disconnect-fiber-editor-container-body-line-item">
