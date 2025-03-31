@@ -16,49 +16,67 @@ const fiberRackTagData: TagInfo[] = [
     id: "a1b2c3d4-e5f6-4789-90ab-cdef01234567",
     name: "Data Center A - Rack 01",
     comment: "Main fiber distribution rack in Data Center A.",
-    tags: ["data center", "location a", "rack 01", "fiber distribution"],
+    tags: ["DATA CENTER", "LOCATION A", "RACK 01", "FIBER DISTRIBUTION"],
   },
   {
     id: "f8e7d6c5-b4a3-4210-8fed-cba987654321",
     name: "Building B - Floor 2 West Side",
     comment:
       "Intermediate fiber patch panel rack on the west side of the second floor in Building B.",
-    tags: ["building b", "floor 2", "west", "fiber patch panel"],
+    tags: ["BUILDING B", "FLOOR 2", "WEST", "FIBER PATCH PANEL"],
   },
   {
     id: "11223344-5566-4778-8990-aabbccddeeff",
     name: "Main Distribution Frame (MDF)",
     comment: "Central MDF for the entire network infrastructure.",
-    tags: ["mdf", "main distribution", "central", "core network"],
+    tags: ["MDF", "MAIN DISTRIBUTION", "CENTRAL", "CORE NETWORK"],
   },
   {
     id: "fedcba98-7654-4321-0fed-cba987654320",
     name: "Server Room 3 - Equipment Rack",
     comment: "Rack containing fiber termination for servers in Server Room 3.",
-    tags: ["server room 3", "equipment rack", "fiber termination", "servers"],
+    tags: ["SERVER ROOM 3", "EQUIPMENT RACK", "FIBER TERMINATION", "SERVERS"],
   },
   {
     id: "99887766-5544-4332-2110-aabbccdd00ff",
     name: "Building C - South Wing Interconnect",
     comment:
       "Rack facilitating fiber connections between different parts of the south wing in Building C.",
-    tags: ["building c", "south wing", "interconnect", "fiber backbone"],
+    tags: ["BUILDING C", "SOUTH WING", "INTERCONNECT", "FIBER BACKBONE"],
   },
   {
     id: "00112233-4455-4667-8899-aabbccddeeff",
     name: "Telecom Closet 1 - Zone A",
     comment:
       "Fiber termination point for users in Zone A connected to Telecom Closet 1.",
-    tags: ["telecom closet", "zone a", "user connectivity", "fiber access"],
+    tags: ["TELECOM CLOSET", "ZONE A", "USER CONNECTIVITY", "FIBER ACCESS"],
   },
   {
     id: "aabbccdd-eeff-4012-3456-7890abcdef0123",
     name: "Outdoor Fiber Enclosure #5",
     comment:
       "Weatherproof enclosure containing fiber splices and connections in the outdoor network.",
-    tags: ["outdoor", "enclosure", "fiber splice", "weatherproof"],
+    tags: ["OUTDOOR", "ENCLOSURE", "FIBER SPLICE", "WEATHERPROOF"],
   },
 ];
+
+const availableTags = [...new Set(fiberRackTagData.flatMap((x) => x.tags))].map(
+  (x) => ({ text: x.toLowerCase(), value: x }),
+);
+
+function createTagOptions(
+  selectedTags: Set<string>,
+  allTags: { text: string; value: string }[],
+) {
+  console.log(allTags);
+  return allTags.map((x) => {
+    return {
+      text: x.text,
+      value: x.value,
+      added: selectedTags.has(x.value),
+    };
+  });
+}
 
 function EditTags() {
   const { t } = useTranslation();
@@ -127,7 +145,9 @@ function EditTags() {
                   />
                 </div>
                 <div className="disconnect-fiber-editor-container-body-line-item">
-                  <TagMenu tags={x.tags} />
+                  <TagMenu
+                    tags={createTagOptions(new Set(x.tags), availableTags)}
+                  />
                 </div>
               </div>
             ))}
