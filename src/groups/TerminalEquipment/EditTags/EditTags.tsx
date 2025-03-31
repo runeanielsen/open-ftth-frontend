@@ -129,13 +129,13 @@ function EditTags() {
             <div className="edit-tags-container-header-item">{t("TAGS")}</div>
           </div>
           <div className="edit-tags-container-body">
-            <div className="disconnect-fiber-editor-container-body-line"></div>
+            <div className="edit-tags-editor-container-body-line"></div>
             {Object.values(tags).map((x) => (
               <div className="edit-tags-container-body-line" key={x.id}>
-                <div className="disconnect-fiber-editor-container-body-line-item">
+                <div className="edit-tags-container-body-line-item">
                   {x.name}
                 </div>
-                <div className="disconnect-fiber-editor-container-body-line-item">
+                <div className="edit-tags-container-body-line-item">
                   <MultiLineTextBox
                     rows={5}
                     value={x.comment ?? ""}
@@ -144,9 +144,10 @@ function EditTags() {
                     }
                   />
                 </div>
-                <div className="disconnect-fiber-editor-container-body-line-item">
+                <div className="edit-tags-container-body-line-item">
                   <TagMenu
                     tags={createTagOptions(new Set(x.tags), availableTags)}
+                    showMenu={true}
                   />
                 </div>
               </div>
