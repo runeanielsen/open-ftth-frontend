@@ -68,12 +68,11 @@ function createTagOptions(
   selectedTags: Set<string>,
   allTags: { text: string; value: string }[],
 ) {
-  console.log(allTags);
   return allTags.map((x) => {
     return {
       text: x.text,
       value: x.value,
-      added: selectedTags.has(x.value),
+      checked: selectedTags.has(x.value),
     };
   });
 }
@@ -84,11 +83,14 @@ function EditTags() {
   const [tags, setTags] = useState<Record<string, TagInfo> | null>(null);
 
   useEffect(() => {
-    const x = fiberRackTagData.reduce<Record<string, TagInfo>>((acc, x) => {
-      acc[x.id] = x;
-      return acc;
-    }, {});
-    setTags(x);
+    const tagInfoLookUp = fiberRackTagData.reduce<Record<string, TagInfo>>(
+      (acc, x) => {
+        acc[x.id] = x;
+        return acc;
+      },
+      {},
+    );
+    setTags(tagInfoLookUp);
   }, []);
 
   const updateTagComment = useCallback(
@@ -106,6 +108,23 @@ function EditTags() {
             comment,
           };
         }
+
+        return updatedTags;
+      });
+    },
+    [setTags],
+  );
+
+  const tagUpdated = useCallback(
+    (id: string, tagValue: string, checked: boolean) => {
+      setTags((prevTags) => {
+        const updatedTags = { ...prevTags };
+
+        const tag = updatedTags[id];
+
+        tag.tags = checked
+          ? [...tag.tags, tagValue]
+          : [...tag.tags.filter((x) => x !== tagValue)];
 
         return updatedTags;
       });
@@ -146,6 +165,9 @@ function EditTags() {
                 </div>
                 <div className="edit-tags-container-body-line-item">
                   <TagMenu
+                    tagUpdated={(value, checked) =>
+                      tagUpdated(x.id, value, checked)
+                    }
                     tags={createTagOptions(new Set(x.tags), availableTags)}
                     showMenu={true}
                   />

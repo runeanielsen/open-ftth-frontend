@@ -4,15 +4,16 @@ import { useState } from "react";
 interface Tag {
   text: string;
   value: string;
-  added: boolean;
+  checked: boolean;
 }
 
 interface TagMenuProps {
   tags: Tag[];
   showMenu: boolean;
+  tagUpdated: (value: string, checked: boolean) => void;
 }
 
-function TagMenu({ tags, showMenu }: TagMenuProps) {
+function TagMenu({ tags, showMenu, tagUpdated }: TagMenuProps) {
   const [tagSelectMenuOpen, setTagSelectMenuOpen] = useState(false);
 
   return (
@@ -20,7 +21,7 @@ function TagMenu({ tags, showMenu }: TagMenuProps) {
       {!tagSelectMenuOpen && (
         <>
           {tags
-            .filter((x) => x.added)
+            .filter((tag) => tag.checked)
             .map(({ text, value }) => (
               <div className="tag-menu-line" key={value}>
                 {text} <span className="tag-menu-line-remove">x</span>
@@ -45,14 +46,14 @@ function TagMenu({ tags, showMenu }: TagMenuProps) {
             </span>
           </div>
           <div className="tag-menu-select-menu-body">
-            {tags.map((x) => (
-              <div className="tag-menu-select-menu-item" key={x.value}>
+            {tags.map((tag) => (
+              <div className="tag-menu-select-menu-item" key={tag.value}>
                 <CheckBox
-                  checked={x.added}
-                  value={x.value}
-                  onChange={() => {}}
+                  checked={tag.checked}
+                  value={tag.value}
+                  onChange={(x) => tagUpdated(x.value.toString(), x.checked)}
                 />
-                {x.text}
+                {tag.text}
               </div>
             ))}
           </div>
