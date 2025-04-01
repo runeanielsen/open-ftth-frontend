@@ -53,11 +53,15 @@ function TagMenu({ tags, showMenu, tagUpdated }: TagMenuProps) {
           </div>
           <div className="tag-menu-select-menu-body">
             {tags.map((tag) => (
-              <div className="tag-menu-select-menu-item" key={tag.value}>
+              <div
+                onClick={() => tagUpdated(tag.value, !tag.checked)}
+                className="tag-menu-select-menu-item"
+                key={tag.value}
+              >
                 <CheckBox
                   checked={tag.checked}
                   value={tag.value}
-                  onChange={(x) => tagUpdated(x.value.toString(), x.checked)}
+                  onChange={(x) => {}}
                 />
                 {tag.text}
               </div>
