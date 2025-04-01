@@ -24,7 +24,13 @@ function TagMenu({ tags, showMenu, tagUpdated }: TagMenuProps) {
             .filter((tag) => tag.checked)
             .map(({ text, value }) => (
               <div className="tag-menu-line" key={value}>
-                {text} <span className="tag-menu-line-remove">x</span>
+                {text}{" "}
+                <span
+                  onClick={() => tagUpdated(value, false)}
+                  className="tag-menu-line-remove"
+                >
+                  x
+                </span>
               </div>
             ))}
           <div
