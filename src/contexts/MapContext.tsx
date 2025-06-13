@@ -6,6 +6,8 @@ import {
   useCallback,
 } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useClient } from "urql";
+import { shortestPathBetweenSegments } from "./MapContextGql";
 
 type FeatureType = "RouteNode" | "RouteSegment" | "Deleted";
 
@@ -137,6 +139,11 @@ const MapProvider = ({ children }: MapProviderProps) => {
     Record<string, (tilesetName: string) => void>
   >({});
   const [isInSelectionMode, setIsInSelectionMode] = useState<boolean>(false);
+  const [clickedSegments, setClickedSegments] = useState<{
+    first: string | null;
+    second: string | null;
+  }>({ first: null, second: null });
+  const client = useClient();
 
   useEffect(() => {
     if (!searchResult) return;
@@ -151,25 +158,32 @@ const MapProvider = ({ children }: MapProviderProps) => {
 
   const toggleSelectedSegmentId = useCallback(
     (segmentId: string) => {
-      setSelectedSegments((prevSelectedSegments) => {
-        const indexAlreadyExist = prevSelectedSegments.indexOf(segmentId);
-        if (indexAlreadyExist === -1) {
-          return [...prevSelectedSegments, segmentId];
+      setClickedSegments((prevClickedSegments) => {
+        if (
+          prevClickedSegments.first !== null &&
+          prevClickedSegments.second !== null
+        ) {
+          return { ...prevClickedSegments, second: segmentId };
+        } else if (
+          prevClickedSegments.first &&
+          prevClickedSegments.second === null
+        ) {
+          return { first: prevClickedSegments.first, second: segmentId };
         } else {
-          prevSelectedSegments.splice(indexAlreadyExist, 1);
-          return [...prevSelectedSegments];
+          return { first: segmentId, second: null };
         }
       });
     },
-    [setSelectedSegments],
+    [setClickedSegments],
   );
 
   const removeLastSelectedSegmentId = useCallback(() => {
     setSelectedSegments((prevSelectedSegments) => {
-      prevSelectedSegments.pop();
-      return [...prevSelectedSegments];
+      return [];
     });
-  }, [setSelectedSegments]);
+
+    setClickedSegments({ first: null, second: null });
+  }, [setSelectedSegments, setClickedSegments]);
 
   function tileSetUpdated(tilesetName: string) {
     Object.entries(subscribeTilesetUpdated).forEach((x) => x[1](tilesetName));
@@ -189,6 +203,29 @@ const MapProvider = ({ children }: MapProviderProps) => {
     },
     [setSelectedSegments],
   );
+
+  useEffect(() => {
+    if (clickedSegments.first === null && clickedSegments.second === null) {
+      return;
+    }
+
+    if (clickedSegments.first !== null && clickedSegments.second === null) {
+      setSelectedSegmentsx([clickedSegments.first]);
+      return;
+    }
+
+    shortestPathBetweenSegments(
+      client,
+      clickedSegments.first,
+      clickedSegments.second,
+    ).then((data) => {
+      if (data.data?.routeNetwork?.shortestPathBetweenSegments) {
+        setSelectedSegmentsx(
+          data.data.routeNetwork.shortestPathBetweenSegments,
+        );
+      }
+    });
+  }, [clickedSegments, client, setSelectedSegmentsx]);
 
   return (
     <MapContext.Provider
