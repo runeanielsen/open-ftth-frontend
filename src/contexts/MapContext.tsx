@@ -177,7 +177,7 @@ const MapProvider = ({ children }: MapProviderProps) => {
     [setClickedSegments],
   );
 
-  const removeLastSelectedSegmentId = useCallback(() => {
+  const clearSelection = useCallback(() => {
     setSelectedSegments((prevSelectedSegments) => {
       return [];
     });
@@ -235,7 +235,7 @@ const MapProvider = ({ children }: MapProviderProps) => {
         setSelectedSegmentIds: setSelectedSegmentsx,
         isInSelectionMode: isInSelectionMode,
         toggleSelectedSegmentId: toggleSelectedSegmentId,
-        removeLastSelectedSegmentId: removeLastSelectedSegmentId,
+        clearSelection: clearSelection,
         identifiedFeature: identifiedNetworkElement,
         setIdentifiedFeature: setIdentifiedNetworkElement,
         trace: trace,

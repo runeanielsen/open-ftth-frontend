@@ -315,7 +315,7 @@ function RouteNetworkMap({
     identifiedFeature,
     subscribeTilesetUpdated,
     unSubscribeTilesetUpdated,
-    removeLastSelectedSegmentId,
+    clearSelection,
     setIsInSelectionMode,
   } = useContext(MapContext);
   const { showElement } = useContext(OverlayContext);
@@ -468,7 +468,7 @@ function RouteNetworkMap({
       (selection: MapGeoJSONFeature) => {
         toggleSelectedSegmentId(selection.properties.mrid);
       },
-      () => removeLastSelectedSegmentId(),
+      () => clearSelection(),
       (selectState: boolean) => {
         setIsInSelectionMode(selectState);
       },
@@ -694,7 +694,7 @@ function RouteNetworkMap({
     mapLibreStyle,
     setMapLoaded,
     toggleSelectedSegmentId,
-    removeLastSelectedSegmentId,
+    clearSelection,
     setShowPlaceSpanEquipment,
     setSelectedSegmentIds,
     isWriter,
