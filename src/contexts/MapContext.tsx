@@ -46,6 +46,7 @@ type MapContextType = {
   tilesetUpdated: (tilesetName: string) => void;
   subscribeTilesetUpdated: (callback: (tilesetName: string) => void) => string;
   unSubscribeTilesetUpdated: (token: string) => void;
+  isLoading: boolean;
 };
 
 type Trace = {
@@ -77,6 +78,7 @@ function arraysEqual(a: any, b: any) {
 }
 
 const MapContext = createContext<MapContextType>({
+  isLoading: false,
   isInSelectionMode: false,
   setIsInSelectionMode: () => {
     console.warn("no provider set for setIsInSelectionMode");
@@ -139,10 +141,12 @@ const MapProvider = ({ children }: MapProviderProps) => {
     Record<string, (tilesetName: string) => void>
   >({});
   const [isInSelectionMode, setIsInSelectionMode] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [clickedSegments, setClickedSegments] = useState<{
     first: string | null;
     second: string | null;
   }>({ first: null, second: null });
+
   const client = useClient();
 
   useEffect(() => {
@@ -205,6 +209,10 @@ const MapProvider = ({ children }: MapProviderProps) => {
   );
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
     if (clickedSegments.first === null && clickedSegments.second === null) {
       return;
     }
@@ -214,18 +222,24 @@ const MapProvider = ({ children }: MapProviderProps) => {
       return;
     }
 
+    setIsLoading(true);
+
     shortestPathBetweenSegments(
       client,
       clickedSegments.first,
       clickedSegments.second,
-    ).then((data) => {
-      if (data.data?.routeNetwork?.shortestPathBetweenSegments) {
-        setSelectedSegmentsx(
-          data.data.routeNetwork.shortestPathBetweenSegments,
-        );
-      }
-    });
-  }, [clickedSegments, client, setSelectedSegmentsx]);
+    )
+      .then((data) => {
+        if (data.data?.routeNetwork?.shortestPathBetweenSegments) {
+          setSelectedSegmentsx(
+            data.data.routeNetwork.shortestPathBetweenSegments,
+          );
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [clickedSegments, client, setSelectedSegmentsx, setIsLoading]);
 
   return (
     <MapContext.Provider
@@ -239,6 +253,7 @@ const MapProvider = ({ children }: MapProviderProps) => {
         identifiedFeature: identifiedNetworkElement,
         setIdentifiedFeature: setIdentifiedNetworkElement,
         trace: trace,
+        isLoading: isLoading,
         setTrace: setTrace,
         searchResult: searchResult,
         setSearchResult: setSearchResult,

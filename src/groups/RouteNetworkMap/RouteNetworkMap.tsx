@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
 import {
@@ -63,10 +63,12 @@ function hoverPointer(featureNames: string[], bboxSize: number, map: Map) {
       ] as LegacyFilterSpecification,
     });
 
-    if (features.length > 0) {
-      map.getCanvas().style.cursor = "pointer";
-    } else {
-      map.getCanvas().style.cursor = "";
+    if (map.getCanvas().style.cursor !== "progress") {
+      if (features.length > 0) {
+        map.getCanvas().style.cursor = "pointer";
+      } else {
+        map.getCanvas().style.cursor = "";
+      }
     }
   });
 }
@@ -317,6 +319,7 @@ function RouteNetworkMap({
     unSubscribeTilesetUpdated,
     clearSelection,
     setIsInSelectionMode,
+    isLoading,
   } = useContext(MapContext);
   const { showElement } = useContext(OverlayContext);
   const [mapLibreStyle, setMaplibreStyle] = useState<StyleSpecification | null>(
@@ -789,6 +792,16 @@ function RouteNetworkMap({
 
     map.current.on("idle", onIdleCallback);
   }, [identifiedFeature, mapLoaded]);
+
+  useLayoutEffect(() => {
+    if (!map.current) return;
+
+    if (isLoading) {
+      map.current.getCanvas().style.cursor = "progress";
+    } else {
+      map.current.getCanvas().style.cursor = "";
+    }
+  }, [isLoading]);
 
   return (
     <div
