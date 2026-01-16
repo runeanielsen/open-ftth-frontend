@@ -365,16 +365,18 @@ function RouteNetworkMap({
 
       const m = map.current;
       const sourceCache = m.style.tileManagers[tilesetName];
+      console.log(sourceCache);
 
       // Reload the whole cache
       sourceCache.reload(true);
+      console.log(sourceCache.getIds());
 
       // Refresh the current files.
       m.refreshTiles(
         tilesetName,
         sourceCache
           .getIds()
-          .map((id) => sourceCache._tiles[id].tileID.canonical),
+          .map((id) => sourceCache.tiles[id].tileID.canonical),
       );
 
       // Will be left in there for now for debug purposes.
