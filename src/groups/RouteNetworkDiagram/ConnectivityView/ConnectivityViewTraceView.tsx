@@ -3,14 +3,20 @@ import { useTranslation } from "react-i18next";
 import { ConnectivityTraceView } from "./ConnectivityViewGql";
 import { ConnectivityViewContext } from "./ConnectivityViewContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSearchPlus, faTags } from "@fortawesome/free-solid-svg-icons";
 import ColorCodedElement from "../../ColorCodedElement";
 
 interface TraceViewProps {
   view: { view: ConnectivityTraceView | null; show: boolean };
+  equipmentId: string;
+  segmentId: string;
 }
 
-function ConnectivityViewTraceView({ view }: TraceViewProps) {
+function ConnectivityViewTraceView({
+  view,
+  equipmentId,
+  segmentId,
+}: TraceViewProps) {
   const { t } = useTranslation();
   const { state, dispatch } = useContext(ConnectivityViewContext);
 
@@ -34,6 +40,21 @@ function ConnectivityViewTraceView({ view }: TraceViewProps) {
             }
           >
             <FontAwesomeIcon icon={faSearchPlus} />
+          </div>
+          <div
+            className="trace-view-actions-action"
+            onClick={() =>
+              dispatch({
+                type: "setShowEditTags",
+                view: {
+                  equipmentId: equipmentId,
+                  show: true,
+                  terminalOrSpanSegmentIds: [segmentId],
+                },
+              })
+            }
+          >
+            <FontAwesomeIcon icon={faTags} />
           </div>
         </div>
       </div>
