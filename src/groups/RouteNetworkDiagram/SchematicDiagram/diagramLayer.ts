@@ -248,7 +248,7 @@ export function getLayer(name: string): LayerSpecification {
         source: "WestTerminalLabel",
         type: "symbol",
         paint: {
-          "text-color": "#444",
+          "text-color": ["case", ["has", "Tags"], "#C41E3A", "#444444"],
         },
         layout: {
           "text-allow-overlap": true,
@@ -267,7 +267,7 @@ export function getLayer(name: string): LayerSpecification {
         source: "EastTerminalLabel",
         type: "symbol",
         paint: {
-          "text-color": "#444",
+          "text-color": ["case", ["has", "Tags"], "#C41E3A", "#444444"],
         },
         layout: {
           "text-allow-overlap": true,
@@ -286,7 +286,7 @@ export function getLayer(name: string): LayerSpecification {
         source: "SouthTerminalLabel",
         type: "symbol",
         paint: {
-          "text-color": "#444",
+          "text-color": ["case", ["has", "Tags"], "#C41E3A", "#444444"],
         },
         layout: {
           "text-allow-overlap": true,
@@ -306,7 +306,7 @@ export function getLayer(name: string): LayerSpecification {
         source: "NorthTerminalLabel",
         type: "symbol",
         paint: {
-          "text-color": "#444",
+          "text-color": ["case", ["has", "Tags"], "#C41E3A", "#444444"],
         },
         layout: {
           "text-allow-overlap": true,
