@@ -1,7 +1,7 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useState, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 import { Slide, ToastContainer } from "react-toastify";
 import BridgeConnector from "./bridge/BridgeConnector";
 import Loading from "./components/Loading";

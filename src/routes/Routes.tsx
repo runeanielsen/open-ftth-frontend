@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Routes as RouterRoutes, Route } from "react-router";
 import IndexPage from "../pages/IndexPage";
 import PlaceSpanEquipmentPage from "../pages/PlaceSpanEquipmentPage";
 import LoginPage from "../pages/LoginPage";
@@ -7,28 +7,41 @@ import WorkTaskPage from "../pages/WorkTaskPage";
 import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => (
-  <Switch>
-    <PrivateRoute roles={["reader"]} exact path="/" component={IndexPage} />
-    <PrivateRoute
-      roles={["writer", "reader"]}
-      exact
+  <RouterRoutes>
+    <Route
+      path="/"
+      element={
+        <PrivateRoute roles={["reader"]}>
+          <IndexPage />
+        </PrivateRoute>
+      }
+    />
+    <Route
       path="/place-span-equipment"
-      component={PlaceSpanEquipmentPage}
+      element={
+        <PrivateRoute roles={["writer", "reader"]}>
+          <PlaceSpanEquipmentPage />
+        </PrivateRoute>
+      }
     />
-    <PrivateRoute
-      roles={["writer", "reader"]}
-      exact
+    <Route
       path="/schematic-diagram/:id?"
-      component={IdentifyFeaturesPage}
+      element={
+        <PrivateRoute roles={["writer", "reader"]}>
+          <IdentifyFeaturesPage />
+        </PrivateRoute>
+      }
     />
-    <PrivateRoute
-      roles={["writer", "reader"]}
-      exact
-      path="/work-tasks/"
-      component={WorkTaskPage}
+    <Route
+      path="/work-tasks"
+      element={
+        <PrivateRoute roles={["writer", "reader"]}>
+          <WorkTaskPage />
+        </PrivateRoute>
+      }
     />
-    <Route exact path="/login" component={LoginPage} />
-  </Switch>
+    <Route path="/login" element={<LoginPage />} />
+  </RouterRoutes>
 );
 
 export default Routes;

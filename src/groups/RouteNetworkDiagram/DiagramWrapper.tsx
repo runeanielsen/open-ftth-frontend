@@ -7,7 +7,7 @@ import EditDiagram from "./EditDiagram";
 import ReadOnlyDiagram from "./ReadOnlyDiagram";
 import Loading from "../../components/Loading";
 import { DiagramProvider } from "./DiagramContext";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import {
   GET_DIAGRAM,
   DiagramQueryResponse,
@@ -55,7 +55,7 @@ function getUrlParameters(parametersString: string): LocationParameters {
 function DiagramWrapper({ editable }: DiagramWrapperProps) {
   const client = useClient();
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const { identifiedFeature, setIdentifiedFeature } = useContext(MapContext);
@@ -116,13 +116,15 @@ function DiagramWrapper({ editable }: DiagramWrapperProps) {
           type: identifiedFeature.type,
         });
 
-    const oldPath = `${history.location.pathname}${history.location.search}`;
-    const newPath = `${history.location.pathname}?${params}`;
+    // window.location is used instead of useLocation, so this effect only runs
+    // when the identified feature changes and not on browser back/forward.
+    const oldPath = `${window.location.pathname}${window.location.search}`;
+    const newPath = `${window.location.pathname}?${params}`;
 
     if (oldPath !== newPath) {
-      history.push(newPath);
+      navigate(newPath);
     }
-  }, [identifiedFeature, history]);
+  }, [identifiedFeature, navigate]);
 
   useEffect(() => {
     if (!identifiedFeature?.id || !client) return;
@@ -146,13 +148,13 @@ function DiagramWrapper({ editable }: DiagramWrapperProps) {
             extraMapInformation: null,
           });
           // We replace the history to avoid the user getting confused and keep refreshing.
-          history.replace("");
+          navigate({ search: "" }, { replace: true });
           toast.error(t("COULD_NOT_LOAD_DIAGRAM"));
           console.error("Could not load diagram.", r);
         }
         setLoading(false);
       });
-  }, [identifiedFeature?.id, client, t, setIdentifiedFeature, history]);
+  }, [identifiedFeature?.id, client, t, setIdentifiedFeature, navigate]);
 
   useEffect(() => {
     if (!diagramSubscriptionResult?.data) return;

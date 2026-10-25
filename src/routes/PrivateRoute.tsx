@@ -1,46 +1,23 @@
-import React from "react";
-import { useContext } from "react";
-import { Route, Redirect, RouteComponentProps } from "react-router-dom";
-import type { RouteProps } from "react-router-dom";
+import { ReactNode, useContext } from "react";
+import { Navigate, useLocation } from "react-router";
 import { UserContext, UserRolesType } from "../contexts/UserContext";
 import Unauthorized from "./Unauthorized";
 
-interface PrivateRouteParams extends RouteProps {
-  component:
-    | React.ComponentType<RouteComponentProps<any>>
-    | React.ComponentType<any>;
+interface PrivateRouteParams {
+  children: ReactNode;
   roles: UserRolesType[];
 }
 
-function PrivateRoute({
-  component: Component,
-  roles,
-  ...rest
-}: PrivateRouteParams) {
+function PrivateRoute({ children, roles }: PrivateRouteParams) {
   const { hasRoles, authenticated } = useContext(UserContext);
+  const location = useLocation();
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        authenticated ? (
-          hasRoles(...roles) ? (
-            // Has required roles we render the component.
-            <Component {...props} />
-          ) : (
-            <Unauthorized />
-          )
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: props.location },
-            }}
-          />
-        )
-      }
-    />
-  );
+  if (!authenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Has required roles we render the component.
+  return hasRoles(...roles) ? <>{children}</> : <Unauthorized />;
 }
 
 export default PrivateRoute;

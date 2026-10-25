@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import RouteNetworkMap from "../RouteNetworkMap";
 import RouteNetworkDiagram from "../RouteNetworkDiagram";
 import { MapContext } from "../../contexts/MapContext";

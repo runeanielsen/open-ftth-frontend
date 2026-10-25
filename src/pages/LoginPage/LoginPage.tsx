@@ -1,10 +1,10 @@
-import { Redirect, useLocation } from "react-router-dom";
+import { Navigate, Path, useLocation } from "react-router";
 import { useAuth } from "react-oidc-context";
 import Loading from "../../components/Loading";
 
 const LoginPage = () => {
-  const location = useLocation<{ [key: string]: unknown }>();
-  const currentLocationState = location.state || {
+  const location = useLocation();
+  const currentLocationState: { from: Partial<Path> } = location.state || {
     from: { pathname: "/" },
   };
 
@@ -13,7 +13,7 @@ const LoginPage = () => {
   if (auth.isLoading) return <Loading />;
 
   if (auth.isAuthenticated)
-    return <Redirect to={currentLocationState?.from as string} />;
+    return <Navigate to={currentLocationState.from} replace />;
 
   auth.signinRedirect();
 
