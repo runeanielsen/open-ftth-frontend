@@ -26,8 +26,7 @@
     "react-toastify": "^11.1.0",
     "sass": "^1.106.1",
     "urql": "^5.0.4",
-    "uuid": "^14.0.3",
-    "websocket": "^1.0.35"
+    "uuid": "^14.0.3"
   },
   "scripts": {
     "dev": "vite",
@@ -58,14 +57,10 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/uuid": "^10.0.0",
-    "@types/websocket": "^1.0.10",
     "@vitejs/plugin-react": "^6.1.2",
     "vite": "^8.3.5"
   },
   "allowScripts": {
-    "es5-ext@0.10.64": true,
-    "bufferutil@4.1.0": true,
-    "utf-8-validate@5.0.10": true,
     "@parcel/watcher@2.6.0": true
   }
 }

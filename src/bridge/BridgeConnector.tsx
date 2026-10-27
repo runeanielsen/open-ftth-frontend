@@ -1,5 +1,4 @@
 import { useEffect, useContext, useState } from "react";
-import { w3cwebsocket } from "websocket";
 import PubSub from "pubsub-js";
 import Config from "../config";
 import useBridgeConnector, {
@@ -21,7 +20,7 @@ interface TilesetUpdatedEvent {
   tilesetName: string;
 }
 
-let websocketClient: w3cwebsocket | null;
+let websocketClient: WebSocket | null;
 
 function send(eventMsg: any) {
   websocketClient?.send(JSON.stringify(eventMsg));
@@ -64,7 +63,7 @@ function BridgeConnector() {
     let reconnectTimeout: ReturnType<typeof setTimeout> | undefined;
 
     function setup() {
-      websocketClient = new w3cwebsocket(Config.DESKTOP_BRIDGE_URI);
+      websocketClient = new WebSocket(Config.DESKTOP_BRIDGE_URI);
 
       websocketClient.onmessage = (message: any) => {
         const event = JSON.parse(message.data);
