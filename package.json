@@ -66,6 +66,6 @@
     "es5-ext@0.10.64": true,
     "bufferutil@4.1.0": true,
     "utf-8-validate@5.0.10": true,
-    "@parcel/watcher@2.5.6": true
+    "@parcel/watcher@2.6.0": true
   }
 }
