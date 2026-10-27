@@ -34,7 +34,7 @@ function addressDisplayText(
     return "";
   }
 
-  let unitAddressText = `${unitAddress?.floorName ?? ""} ${
+  const unitAddressText = `${unitAddress?.floorName ?? ""} ${
     unitAddress?.suitName ?? ""
   }`.trim();
 
@@ -67,7 +67,7 @@ function GeneralTerminalEquipmentView({
   useEffect(() => {
     getGeneralView(client, terminalEquipmentId)
       .then((x) => {
-        let terminalEquipment = x.data?.utilityNetwork.terminalEquipment;
+        const terminalEquipment = x.data?.utilityNetwork.terminalEquipment;
         if (terminalEquipment) {
           setTerminalEquipment(terminalEquipment);
         } else {

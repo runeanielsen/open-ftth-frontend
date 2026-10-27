@@ -131,7 +131,7 @@ function OutageView({
 
   useEffect(() => {
     getInformation(client, routeElementId, equipmentId).then((reponse) => {
-      let outageView = reponse.data?.outage.outageView;
+      const outageView = reponse.data?.outage.outageView;
       if (outageView) {
         setNode(convertToTreeNodes(outageView, t));
       } else {
@@ -147,7 +147,7 @@ function OutageView({
       Config.OUTAGE_VIEW_WORK_TASK_TYPE,
       Config.OUTAGE_VIEW_WORK_TASK_STATUS,
     ).then((response) => {
-      let troubleTickets = response.data?.outage.latestTroubleTickets;
+      const troubleTickets = response.data?.outage.latestTroubleTickets;
       if (troubleTickets) {
         setWorkTasks(troubleTickets);
       } else {

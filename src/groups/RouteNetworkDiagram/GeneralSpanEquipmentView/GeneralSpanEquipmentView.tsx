@@ -44,7 +44,7 @@ function addressDisplayText(
     return "";
   }
 
-  let unitAddressText = `${unitAddress?.floorName ?? ""} ${
+  const unitAddressText = `${unitAddress?.floorName ?? ""} ${
     unitAddress?.suitName ?? ""
   }`.trim();
 
@@ -81,7 +81,7 @@ function GeneralSpanEquipmentView({
   useEffect(() => {
     getSpanEquipmentDetails(client, spanEquipmentId)
       .then((x) => {
-        let spanEquipment = x.data?.utilityNetwork.spanEquipment;
+        const spanEquipment = x.data?.utilityNetwork.spanEquipment;
         if (spanEquipment) {
           setSpanEquipment(spanEquipment);
         } else {

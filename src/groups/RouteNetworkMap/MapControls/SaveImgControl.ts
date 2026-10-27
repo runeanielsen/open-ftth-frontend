@@ -10,7 +10,7 @@ function getDataURL(canvas: HTMLCanvasElement, type: string) {
 }
 
 function saveFile(strData: string, fileType: string, fileName = "name") {
-  let saveLink = document.createElement("a");
+  const saveLink = document.createElement("a");
   saveLink.download = fileName + "." + fileType;
   saveLink.href = strData;
   saveLink.click();
