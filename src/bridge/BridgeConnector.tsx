@@ -60,6 +60,9 @@ function BridgeConnector() {
       return;
     }
 
+    let disposed = false;
+    let reconnectTimeout: ReturnType<typeof setTimeout> | undefined;
+
     function setup() {
       websocketClient = new w3cwebsocket(Config.DESKTOP_BRIDGE_URI);
 
@@ -85,28 +88,30 @@ function BridgeConnector() {
       };
 
       websocketClient.onclose = () => {
+        if (disposed) return;
         console.log("Disconnected from BridgeConnector");
         setConnected(false);
-        reconnect();
-      };
-
-      websocketClient.onerror = () => {
-        console.log("Error happend in BridgeConnector");
-        setConnected(false);
-        reconnect();
-      };
-
-      function reconnect() {
-        setTimeout(() => {
+        reconnectTimeout = setTimeout(() => {
           console.log("Reconnecting to BridgeConnector");
           setup();
         }, 5000);
-      }
+      };
+
+      // An error is always followed by a close event,
+      // so reconnecting is only handled on close.
+      websocketClient.onerror = () => {
+        console.log("Error happend in BridgeConnector");
+      };
     }
 
-    setup();
+    // Connect on the next tick, so a mount that is immediately cleaned up
+    // (React StrictMode in development) never opens a connection.
+    reconnectTimeout = setTimeout(setup, 0);
 
     return () => {
+      disposed = true;
+      clearTimeout(reconnectTimeout);
+      websocketClient?.close();
       setConnected(false);
       websocketClient = null;
     };
