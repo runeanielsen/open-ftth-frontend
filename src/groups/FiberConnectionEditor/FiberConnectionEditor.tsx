@@ -157,7 +157,7 @@ function getAvailableConnections(
   const fromIndex = from.findIndex((x) => x.terminalOrSegmentId === fromId);
   const toIndex = to.findIndex((x) => x.terminalOrSegmentId === toId);
 
-  let fromAvailable: ConnectivityFaceConnection[] = [];
+  let fromAvailable: ConnectivityFaceConnection[];
   const toAvailable = [...to].splice(toIndex, count);
   if (jumps <= 1) {
     fromAvailable = [...from].splice(fromIndex, count);

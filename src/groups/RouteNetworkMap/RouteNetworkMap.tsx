@@ -551,7 +551,7 @@ function RouteNetworkMap({
         informationControl,
         selectControl,
         (x) => {
-          let type: "RouteNode" | "RouteSegment" | null = null;
+          let type: "RouteNode" | "RouteSegment";
           if (x?.properties?.objecttype === "route_node") {
             type = "RouteNode";
           } else if (x?.properties?.objecttype === "route_segment") {
