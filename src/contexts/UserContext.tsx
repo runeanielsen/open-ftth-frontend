@@ -25,7 +25,7 @@ const UserContext = createContext<UserContextType>({
   reloadUserWorkTask: () => {
     console.warn("No provider set for reloadUserWorkTask");
   },
-  hasRoles: (..._: UserRolesType[]): boolean => {
+  hasRoles: (): boolean => {
     throw new Error("No provider set for hasRole");
   },
   authenticated: false,

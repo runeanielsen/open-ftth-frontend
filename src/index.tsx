@@ -18,7 +18,7 @@ const oidcConfig = {
 };
 
 // This is used to clear the history after the sign-in redirect.
-const onSigninCallback = (_user: any | void): void => {
+const onSigninCallback = (): void => {
   const url = new URL(window.location.href);
   if (url.searchParams.has('state') && url.searchParams.has('session_state') && url.searchParams.has('iss') && url.searchParams.has('code')) {
     url.searchParams.delete('state');

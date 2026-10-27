@@ -66,7 +66,7 @@ function TagMenu({ tags, showMenu, tagUpdated, readOnly }: TagMenuProps) {
                 <CheckBox
                   checked={tag.checked}
                   value={tag.value}
-                  onChange={(x) => {}}
+                  onChange={() => {}}
                 />
                 {tag.text}
               </div>

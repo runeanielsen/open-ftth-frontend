@@ -182,9 +182,7 @@ const MapProvider = ({ children }: MapProviderProps) => {
   );
 
   const clearSelection = useCallback(() => {
-    setSelectedSegments((prevSelectedSegments) => {
-      return [];
-    });
+    setSelectedSegments([]);
 
     setClickedSegments({ start: null, end: null });
   }, [setSelectedSegments, setClickedSegments]);

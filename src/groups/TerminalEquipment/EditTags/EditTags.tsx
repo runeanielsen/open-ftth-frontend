@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useClient } from "urql";
 import MultiLineTextBox from "../../../components/MultiLineTextbox";
@@ -15,10 +15,6 @@ interface TagInfo {
   displayName: string;
   comment?: string;
   tags?: string[];
-}
-
-function getUniqueListBy(arr: any, key: any) {
-  return [...new Map(arr.map((item) => [item[key], item])).values()];
 }
 
 function createTagOptions(

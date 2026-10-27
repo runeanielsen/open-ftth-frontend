@@ -1,6 +1,5 @@
 import { Feature } from "geojson";
 import {
-  GeoJSONFeature,
   Map,
   MapGeoJSONFeature,
   PointLike,
@@ -140,8 +139,6 @@ function hoverPointer(
   map: Map,
   enableHoverColor: boolean,
 ) {
-  let hoveredFeature: GeoJSONFeature | null = null;
-
   const mouseMoveFn = (e: MapMouseEvent) => {
     const bbox: [PointLike, PointLike] = [
       [e.point.x, e.point.y],
@@ -181,11 +178,9 @@ function hoverPointer(
     }
 
     map.getCanvas().style.cursor = "pointer";
-
-    hoveredFeature = feature;
   };
 
-  const mouseLeaveFn = (e: maplibregl.MapMouseEvent) => {
+  const mouseLeaveFn = () => {
     if (enableHoverColor) {
       featureNames.forEach((source) => {
         map
