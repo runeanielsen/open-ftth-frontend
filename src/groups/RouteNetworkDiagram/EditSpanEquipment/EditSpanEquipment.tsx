@@ -220,9 +220,9 @@ function EditSpanEquipment({
     return getFilteredSpanEquipmentSpecifications(
       spanEquipmentSpecifications,
       selectedCategory,
-      setShowDeprecated,
+      showDeprecated,
     ).sort(sortSpecificationComparer);
-  }, [spanEquipmentSpecifications, selectedCategory, setShowDeprecated]);
+  }, [spanEquipmentSpecifications, selectedCategory, showDeprecated]);
 
   const filteredManufactuers = useMemo(
     () =>
