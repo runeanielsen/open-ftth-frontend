@@ -175,7 +175,7 @@ interface ConnectTerminalsParams {
   routeNodeId: string;
   fromTerminalId: string;
   toTerminalId: string;
-  fiberCoordLength: Number;
+  fiberCoordLength: number;
 }
 
 const CONNECT_TERMINALS_MUTATION = `

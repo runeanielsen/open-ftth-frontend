@@ -12,7 +12,7 @@ import { useAuth } from "react-oidc-context";
 import Config from "../config";
 import { authExchange } from "@urql/exchange-auth";
 
-type AuthWrapperContextType = {};
+type AuthWrapperContextType = Record<string, never>;
 
 const AuthWrapperContext = createContext<AuthWrapperContextType>({});
 

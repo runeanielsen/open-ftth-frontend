@@ -300,7 +300,7 @@ class InformationControl {
     | ((
         e: MapMouseEvent & {
           features?: Feature<Geometry, GeoJsonProperties>[] | undefined;
-        } & Object,
+        },
       ) => void)
     | null = null;
   onHoverFunc: ((e: MapMouseEvent) => void) | null = null;

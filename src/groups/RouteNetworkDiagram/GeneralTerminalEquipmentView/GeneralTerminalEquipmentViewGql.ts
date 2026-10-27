@@ -22,7 +22,7 @@ export interface TerminalEquipment {
     status?: string;
   };
   dynamicProperties: {
-    sectionName: String;
+    sectionName: string;
     properties: { name: string; value: string }[];
   }[];
   addressInfo?: {
