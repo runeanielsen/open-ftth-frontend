@@ -5,13 +5,13 @@ interface Tag {
   text: string;
   value: string;
   checked: boolean;
-  readOnly: boolean;
 }
 
 interface TagMenuProps {
   tags: Tag[];
   showMenu: boolean;
   tagUpdated: (value: string, checked: boolean) => void;
+  readOnly: boolean;
 }
 
 function TagMenu({ tags, showMenu, tagUpdated, readOnly }: TagMenuProps) {
