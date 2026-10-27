@@ -10,7 +10,7 @@ The frontend for the OPEN-FTTH system.
 ### Running
 
 ``` sh
-npm start
+npm run dev
 ```
 
 ### Build
