@@ -89,7 +89,7 @@ class ToggleLayerButton {
       // We do this to find out if the button is toggled or not
       let visible = true;
       for (const layer of x.layers) {
-        var visibility = map.getLayoutProperty(layer, "visibility");
+        const visibility = map.getLayoutProperty(layer, "visibility");
         if (visibility === "none") {
           visible = false;
         }
@@ -102,7 +102,7 @@ class ToggleLayerButton {
         callback: () => {
           if (!this.map || !this.container) return;
           for (const name of x.layers) {
-            var visibility = this.map.getLayoutProperty(name, "visibility");
+            const visibility = this.map.getLayoutProperty(name, "visibility");
             // If undefined it is visible
             if (visibility === "visible" || visibility === undefined) {
               this.map.setLayoutProperty(name, "visibility", "none");

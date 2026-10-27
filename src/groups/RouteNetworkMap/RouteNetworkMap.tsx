@@ -59,7 +59,7 @@ function hoverPointer(featureNames: string[], bboxSize: number, map: Map) {
       [e.point.x + bboxSize, e.point.y + bboxSize],
     ];
 
-    var features = map.queryRenderedFeatures(bbox, {
+    const features = map.queryRenderedFeatures(bbox, {
       filter: [
         "any",
         ...featureNames.map((x) => {

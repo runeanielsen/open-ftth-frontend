@@ -120,7 +120,7 @@ function range(from: number, to: number, jumps: number): number[] {
 
 function partition<T>(n: number, c: T[]): T[][] {
   const output = [];
-  for (var i = 0; i < c.length; i += n) {
+  for (let i = 0; i < c.length; i += n) {
     output[output.length] = [...c].slice(i, i + n);
   }
   return output;
@@ -254,7 +254,7 @@ function FiberConnectionEditor({
   useEffect(() => {
     if (!faceKind || !terminalId || !terminalEquipmentOrRackId || !side) return;
 
-    var equipmentId = getCombinedEquipmentId({
+    const equipmentId = getCombinedEquipmentId({
       equipmentId: terminalEquipmentOrRackId,
       faceKind: faceKind,
     });

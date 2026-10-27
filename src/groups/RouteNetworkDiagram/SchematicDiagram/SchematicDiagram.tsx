@@ -117,7 +117,7 @@ const loadDiagram = (map: Map, diagramObjects: Diagram[]) => {
 };
 
 function mapFitBounds(envelope: Envelope, map: Map, zoom: number | null) {
-  var extraOptions = zoom
+  const extraOptions = zoom
     ? {
         zoom: zoom,
       }

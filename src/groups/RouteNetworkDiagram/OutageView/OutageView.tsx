@@ -223,7 +223,7 @@ function OutageView({
 
   const copyToClipboard = () => {
     if (node) {
-      var clipboardText = formatNodesClipboard(selectedNodesWithUniqueValues);
+      const clipboardText = formatNodesClipboard(selectedNodesWithUniqueValues);
       navigator.clipboard.writeText(clipboardText).then(
         () => {
           toast.success(t("COPIED_TO_CLIPBOARD"));

@@ -63,8 +63,8 @@ function createButton(): HTMLButtonElement {
 
 function createPopupContainer(bodyContents: string[]): HTMLDivElement {
   const stringToHTML = (str: string) => {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(str, "text/html");
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(str, "text/html");
     return doc.body;
   };
 
